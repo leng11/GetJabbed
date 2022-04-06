@@ -69,8 +69,6 @@
     
     <module>center-service</module>
     <module>user-service</module>
-          
-    
     <module>appointment-service</module>
       
   </modules>
