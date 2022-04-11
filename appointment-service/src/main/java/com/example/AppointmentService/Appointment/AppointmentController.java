@@ -1,5 +1,6 @@
 package com.example.AppointmentService.Appointment;
 
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,7 +29,11 @@ public class AppointmentController {
         return appointmentService.cancel(confirmationId);
     }
     @PutMapping("/appointments/completed")
-    public ResponseEntity<Appointment> completed(@RequestParam long confirmationId){
+    public ResponseEntity<Appointment> completed(@RequestParam long confirmationId,@RequestParam long vaccineId,@RequestParam String lot,@RequestParam long inventoryId){
         return appointmentService.completed(confirmationId);
+    }
+    @PutMapping("/appointments/setReminder")
+    public ResponseEntity<Map<String,Object>> setReminder(@RequestParam long confirmationId,@RequestParam String notifyType,@RequestParam String notifyString){
+        return appointmentService.setReminder(confirmationId, notifyType, notifyString);
     }
 }

@@ -11,6 +11,6 @@ import java.util.Optional;
 
 @Repository
 public interface ScheduleRepository extends JpaRepository<Schedule,Long> {
-    Optional<List<Schedule>> findByDateBetween(@Temporal(TemporalType.DATE) Date startDate,@Temporal(TemporalType.DATE)Date endDate);
+    Optional<List<Schedule>> findByDateBetween(Date startDate,Date endDate);
     Optional<List<Schedule>> findByDate(Date date);
 }

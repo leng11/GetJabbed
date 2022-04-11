@@ -32,6 +32,14 @@ public class ScheduleService {
         if(scheduleList.isEmpty()) throw new ResourceNotFoundException("Schedules not found");
         return ResponseEntity.ok(scheduleList);
     }
+    public ResponseEntity<List<Schedule>> getFreeSlot(Date date, long centerId,long vaccineId){
+        List<Date> startAndEndDates = getWeek(date);
+        log.info(""+startAndEndDates);
+        List<Schedule> scheduleList = scheduleRepository.findByDateBetween(startAndEndDates.get(0),startAndEndDates.get(1)).orElseThrow(() -> new ResourceNotFoundException("Schedules not found"));
+        if(scheduleList.isEmpty()) throw new ResourceNotFoundException("No Schedules within Date parameters");
+
+        return ResponseEntity.ok(scheduleList);
+    }
     public ResponseEntity<List<Map<String,Object>>> report(Date date){
         List<Schedule> scheduleList = scheduleRepository.findByDate(date).orElseThrow(() -> new ResourceNotFoundException("Schedule not Found"));
         if(scheduleList.isEmpty()) throw new ResourceNotFoundException("Schedules not found");
@@ -71,5 +79,22 @@ public class ScheduleService {
         return ResponseEntity.ok(map);
     }
 
+    private List<Date> getWeek(Date date){
+        log.info("Date: " +date.toString());
+        List<Date> dateList = new ArrayList<>();
+        Date startDate;
+        Date endDate;
+        Calendar calendar = Calendar.getInstance();
 
+        calendar.setTime(date);
+        calendar.set(Calendar.DAY_OF_WEEK,Calendar.SUNDAY);
+
+        startDate = new Date(calendar.getTimeInMillis());
+        dateList.add(startDate);
+        calendar.add(Calendar.DAY_OF_MONTH,7);
+
+        endDate = new Date(calendar.getTimeInMillis());
+        dateList.add(endDate);
+        return dateList;
+    }
 }

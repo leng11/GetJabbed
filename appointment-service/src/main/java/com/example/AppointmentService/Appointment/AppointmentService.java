@@ -39,4 +39,15 @@ public class AppointmentService {
         appointmentRepository.save(appointment);
         return ResponseEntity.ok(appointment);
     }
+    public ResponseEntity<Map<String,Object>> setReminder(long confirmationId,String notifyType,String notifyString){
+        Map<String,Object> map = new HashMap<>();
+        Appointment appointment = appointmentRepository.findById(confirmationId).orElseThrow(() -> new ResourceNotFoundException("Appointment not found"));
+        appointment.setNotifyType(notifyType);
+        appointment.setNotifyString(notifyString);
+        appointmentRepository.save(appointment);
+        map.put("confirmationId",confirmationId);
+        map.put("notifyType",notifyType);
+        map.put("notifyString",notifyString);
+        return ResponseEntity.ok(map);
+    }
 }

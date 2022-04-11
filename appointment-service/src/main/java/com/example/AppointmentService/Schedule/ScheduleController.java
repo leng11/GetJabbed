@@ -36,4 +36,8 @@ public class ScheduleController {
     public ResponseEntity<List<Map<String,Object>>> report(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date date){
         return scheduleService.report(date);
     }
+    @GetMapping("/appointments/getFreeSlot")
+    public ResponseEntity<List<Schedule>> getFreeSlot(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date date, @RequestParam long centerId,@RequestParam long vaccineId){
+        return scheduleService.getFreeSlot(date, centerId, vaccineId);
+    }
 }
