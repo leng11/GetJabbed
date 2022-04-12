@@ -3,13 +3,13 @@ package com.example.controller;
 import com.example.dao.UserDao;
 import com.example.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/v1/user-controller")
+@RequestMapping("/user/details")
 public class UserController {
-    @Autowired private UserDao userDao;
+    @Autowired
+    private UserDao userDao;
 
 
     @PostMapping("/register")
@@ -18,11 +18,10 @@ public class UserController {
     }
 
 
-    @GetMapping("/listuserdata")
-    public User findById(@RequestParam(name = "ssn") String ssn) {
-        return userDao.findBySsn(ssn);
+    @GetMapping("/display")
+    public User findById(@RequestParam(name = "ssn") String official_id) {
+        return userDao.findById(official_id);
     }
-
 
 
 }

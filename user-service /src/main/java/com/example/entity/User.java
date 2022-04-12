@@ -24,7 +24,7 @@ public class User {
 
     @Id
     @Column(nullable =false, unique = true)
-    private String ssn;
+    private String official_id;
     
     @Column
     private String address;

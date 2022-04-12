@@ -5,7 +5,7 @@ import com.example.entity.Certificate;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/v1/certificate-controller")
+@RequestMapping("/user/certificate")
 public class CertificateController {
 
     private final CertificateDao certificateDao;
@@ -15,9 +15,9 @@ public class CertificateController {
         this.certificateDao = certificateDao;
     }
 
-    @GetMapping("/user/certificate")
-    public Certificate getCertificateByUser(@RequestParam(value = "ssn") final String ssn){
-        return certificateDao.getCertificateByUserSsn(ssn);
+    @GetMapping("/generate")
+    public Certificate getCertificateByUser(@RequestParam(value = "official_id") final String official_id){
+        return certificateDao.getCertificateById(official_id);
     }
 
     @PostMapping("/add")

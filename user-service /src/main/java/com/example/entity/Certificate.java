@@ -28,13 +28,13 @@ public class Certificate {
     private Date date;
 
     @Column(nullable = false)
-    private int DosesCount;
+    private int vaccine_id;
 
     @Column(nullable = false)
     private String location;
 
     @JsonBackReference
-    @JoinColumn(name="ssn")
+    @JoinColumn(name="official_id")
     @OneToOne
     private User user;
 
