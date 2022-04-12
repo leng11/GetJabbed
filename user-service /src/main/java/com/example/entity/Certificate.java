@@ -9,7 +9,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.util.Date;
 
-@Table(name="CERTIFICATE")
+@Table(name = "CERTIFICATE")
 @Entity
 @Getter
 @Setter
@@ -31,11 +31,13 @@ public class Certificate {
     private int vaccine_id;
 
     @Column(nullable = false)
+    private int lot;
+
+    @Column(nullable = false)
     private String location;
 
-    @JsonBackReference
-    @JoinColumn(name="official_id")
-    @OneToOne
-    private User user;
+    @Column(nullable = false, unique = true)
+    private String officialId;
 
 }
+

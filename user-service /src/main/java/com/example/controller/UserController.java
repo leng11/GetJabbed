@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/user/details")
+@RequestMapping("/v1/vaccine/users/")
 public class UserController {
     @Autowired
     private UserDao userDao;
@@ -18,8 +18,8 @@ public class UserController {
     }
 
 
-    @GetMapping("/display")
-    public User findById(@RequestParam(name = "ssn") String official_id) {
+    @GetMapping("/list")
+    public User findById(@RequestParam(name = "official_id") String official_id) {
         return userDao.findById(official_id);
     }
 

@@ -29,9 +29,4 @@ public class User {
     @Column
     private String address;
 
-
-    @JsonManagedReference
-    @OneToOne(mappedBy = "user")
-    private Certificate certificate;
-
 }
