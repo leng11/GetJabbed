@@ -46,19 +46,18 @@ public class Controller {
 	
 	@PostMapping("/v1/vaccineCenters/restock")
 	public void restock(@RequestBody Shipment shipment) {
-		
-//		Vaccine vaccine = service.getVaccine(shipment.).
-		
-		
+		service.restock(shipment);	
 	}
-	
 	
 	@PutMapping("/v1/vaccineCenters/publishReminder")
 	public Boolean publishReminder(@RequestParam("date") 
 	  								@DateTimeFormat(pattern = "dd-MM-yyyy") Date date) {
-		return false;
-		
+		return service.publishReminder(date);
 	}
 
+	@PostMapping("/v1/vaccineCenters/shotAdministrated")
+	public void testShotAdministratedFeature() {
+		service.testShotAdministratedFeature();
+	}
 
 }
