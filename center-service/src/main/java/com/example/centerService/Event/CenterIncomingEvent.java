@@ -37,7 +37,6 @@ public class CenterIncomingEvent implements EventHandler {
 	@Autowired
 	private InventoryRepo inventoryRepo;
 	
-	
 	public EventHandler register() {
 		log.info("register incoming event on topic: {}", topic);
 		return KafkaConsumerEventService.addHandler(topic, this);

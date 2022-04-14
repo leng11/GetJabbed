@@ -31,7 +31,7 @@ public class KafkaConsumerEventService {
 		return MSG_HANDLER_REGISTRY.remove(topic);
 	}
 	
-	@KafkaListener(topics="${spring.kafka.consumer.topic.name}")
+	@KafkaListener(topics="#{'${spring.kafka.consumer.topic.name}'.split(',')}")
 	public void onMsg(ConsumerRecord<Integer, String> consumerRecord) {
 		Map<String, Object> headers = new HashMap<>();
 		headers.put(TOPIC_ATTR, consumerRecord.topic());

@@ -39,7 +39,7 @@ spring:
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       group-id: center-listener
       topic:
-        name: shotAdministrated
+        name: vaccineInventory,shotAdministrated,publishReminder
     producer:
       bootstrap-servers: localhost:9092
       key-serializer: org.apache.kafka.common.serialization.LongSerializer
