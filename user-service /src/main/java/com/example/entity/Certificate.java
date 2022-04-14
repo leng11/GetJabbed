@@ -37,7 +37,7 @@ public class Certificate {
     private String location;
 
     @Column(nullable = false, unique = true)
-    private String officialId;
+    private int officialId;
 
 }
 

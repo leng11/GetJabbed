@@ -4,8 +4,12 @@ import com.example.entity.User;
 
 import org.springframework.data.repository.CrudRepository;
 
+import java.util.List;
+
 
 public interface UserDao extends CrudRepository<User,Long> {
-    User findById(final String official_id);
+    User findByOfficialid(int id);
+
+    List< User > findAll();
 
 }

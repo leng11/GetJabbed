@@ -16,7 +16,7 @@ public class CertificateController {
     }
 
     @GetMapping("/retriveCertificate")
-    public Certificate getCertificateByUser(@RequestParam(value = "officialId") final String officialId){
+    public Certificate getCertificateByUser(@RequestParam(value = "officialId") final int officialId){
         return certificateDao.getCertificateByOfficialId(officialId);
     }
 

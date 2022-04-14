@@ -24,7 +24,7 @@ public class User {
 
     @Id
     @Column(nullable =false, unique = true)
-    private String official_id;
+    private int officialid;
     
     @Column
     private String address;
