@@ -21,19 +21,19 @@ public class AppointmentController {
     }
 
     @GetMapping("/appointment/{id}")
-    public ResponseEntity<Appointment> getAppointment(@PathVariable long id){
+    public ResponseEntity<Appointment> getAppointment(@PathVariable int id){
         return appointmentService.getAppointment(id);
     }
     @PutMapping("/appointments/cancel")
-    public ResponseEntity<Map<String,Object>> cancel(@RequestParam long confirmationId){
+    public ResponseEntity<Map<String,Object>> cancel(@RequestParam int confirmationId){
         return appointmentService.cancel(confirmationId);
     }
     @PutMapping("/appointments/completed")
-    public ResponseEntity<Appointment> completed(@RequestParam long confirmationId,@RequestParam long vaccineId,@RequestParam String lot,@RequestParam long inventoryId){
+    public ResponseEntity<Appointment> completed(@RequestParam int confirmationId,@RequestParam int vaccineId,@RequestParam String lot,@RequestParam int inventoryId){
         return appointmentService.completed(confirmationId);
     }
     @PutMapping("/appointments/setReminder")
-    public ResponseEntity<Map<String,Object>> setReminder(@RequestParam long confirmationId,@RequestParam String notifyType,@RequestParam String notifyString){
+    public ResponseEntity<Map<String,Object>> setReminder(@RequestParam int confirmationId,@RequestParam String notifyType,@RequestParam String notifyString){
         return appointmentService.setReminder(confirmationId, notifyType, notifyString);
     }
 }

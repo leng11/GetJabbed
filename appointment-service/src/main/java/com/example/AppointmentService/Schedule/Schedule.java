@@ -23,7 +23,7 @@ public class Schedule {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long scheduleId;
+    private int scheduleId;
 
     @Temporal(TemporalType.DATE)
     private Date date;
@@ -43,7 +43,6 @@ public class Schedule {
     @NonNull
     @OneToMany(mappedBy = "schedule",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     private List<Appointment> appointmentList = new ArrayList<>();
-
 
     public Schedule(Date date, Time time,int centerId, int vaccineTypeId) {
         this.date = date;

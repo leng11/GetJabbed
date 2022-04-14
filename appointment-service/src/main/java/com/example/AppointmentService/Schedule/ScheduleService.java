@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -23,7 +24,7 @@ public class ScheduleService {
     public ResponseEntity<List<Schedule>> getAllSchedules(){
         return ResponseEntity.ok(scheduleRepository.findAll());
     }
-    public ResponseEntity<Schedule> getSchedule(long id){
+    public ResponseEntity<Schedule> getSchedule(int id){
         Schedule schedule = scheduleRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Schedule not Found"));
         return ResponseEntity.ok(schedule);
     }
@@ -32,13 +33,18 @@ public class ScheduleService {
         if(scheduleList.isEmpty()) throw new ResourceNotFoundException("Schedules not found");
         return ResponseEntity.ok(scheduleList);
     }
-    public ResponseEntity<List<Schedule>> getFreeSlot(Date date, long centerId,long vaccineId){
+    public ResponseEntity<List<Schedule>> getFreeSlot(Date date, int centerId,int vaccineId){
         List<Date> startAndEndDates = getWeek(date);
         log.info(""+startAndEndDates);
         List<Schedule> scheduleList = scheduleRepository.findByDateBetween(startAndEndDates.get(0),startAndEndDates.get(1)).orElseThrow(() -> new ResourceNotFoundException("Schedules not found"));
-        if(scheduleList.isEmpty()) throw new ResourceNotFoundException("No Schedules within Date parameters");
+        if(scheduleList.isEmpty()) throw new ResourceNotFoundException("No Schedules within given parameters");
 
-        return ResponseEntity.ok(scheduleList);
+        List<Schedule> newList = scheduleList.stream()
+                .filter(schedule -> schedule.getCenterId() ==centerId && schedule.getVaccineTypeId()==vaccineId && schedule.getOpenSlot()>0).collect(Collectors.toList());
+
+        if(newList.isEmpty()) throw new ResourceNotFoundException("No Schedules within given parameters");
+
+        return ResponseEntity.ok(newList);
     }
     public ResponseEntity<List<Map<String,Object>>> report(Date date){
         List<Schedule> scheduleList = scheduleRepository.findByDate(date).orElseThrow(() -> new ResourceNotFoundException("Schedule not Found"));
@@ -56,7 +62,7 @@ public class ScheduleService {
         return ResponseEntity.ok(reportList);
     }
 
-    public ResponseEntity<Map<String,Object>> book(long scheduleId, long userId){
+    public ResponseEntity<Map<String,Object>> book(int scheduleId, int userId){
         Map<String,Object> map = new HashMap<>();
         Schedule schedule = scheduleRepository.findById(scheduleId).orElseThrow(() -> new ResourceNotFoundException("Schedule not found"));
         List<Appointment> appointmentList = schedule.getAppointmentList();

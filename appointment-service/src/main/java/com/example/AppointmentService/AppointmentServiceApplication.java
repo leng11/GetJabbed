@@ -29,14 +29,16 @@ public class AppointmentServiceApplication {
 			Schedule schedule = new Schedule(new Date(calendar.getTimeInMillis()),time,1,1);
 			Schedule schedule2 = new Schedule(new Date(calendar.getTimeInMillis()),new Time(6,0,0),2,2);
 			Appointment appointment = new Appointment(schedule,0,1,"none","none","open",null);
-			Appointment appointment2 = new Appointment(schedule,0,1,"none","none","completed",null);
+			Appointment appointment2 = new Appointment(schedule,1,1,"none","none","completed",null);
 			Appointment appointment3 = new Appointment(schedule2,0,1,"none","none","open",null);
+			Appointment appointment4 = new Appointment(schedule,0,1,"none","none","open",null);
 
 			scheduleRepository.save(schedule);
 			scheduleRepository.save(schedule2);
 			appointmentRepository.save(appointment);
 			appointmentRepository.save(appointment2);
 			appointmentRepository.save(appointment3);
+			appointmentRepository.save(appointment4);
 
 		};
 	}

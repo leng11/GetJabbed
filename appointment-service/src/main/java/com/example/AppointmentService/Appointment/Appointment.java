@@ -17,15 +17,15 @@ import java.util.Date;
 public class Appointment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long confirmationId;
+    private int confirmationId;
 
     @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "scheduleId")
     private Schedule schedule;
 
-    private long userId;
-    private long centerId;
+    private int userId;
+    private int centerId;
     private String notifyType;
     private String notifyString;
     private String status;

@@ -17,12 +17,12 @@ public class AppointmentService {
         return ResponseEntity.ok(appointmentRepository.findAll());
     }
 
-    public ResponseEntity<Appointment> getAppointment(long id) {
+    public ResponseEntity<Appointment> getAppointment(int id) {
         Appointment appointment = appointmentRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Resource not Found"));
         return ResponseEntity.ok(appointment);
     }
 
-    public ResponseEntity<Map<String,Object>> cancel(long confirmationId){
+    public ResponseEntity<Map<String,Object>> cancel(int confirmationId){
         Map<String,Object> map = new HashMap<>();
         Appointment appointment = appointmentRepository.findById(confirmationId).orElseThrow(() -> new ResourceNotFoundException("Appointment not found"));
         appointment.setCancelId("Cancelled");
@@ -33,13 +33,14 @@ public class AppointmentService {
         return ResponseEntity.ok(map);
     }
 
-    public ResponseEntity<Appointment> completed(long confirmationId){
+    public ResponseEntity<Appointment> completed(int confirmationId){
         Appointment appointment = appointmentRepository.findById(confirmationId).orElseThrow(() -> new ResourceNotFoundException("Appointment not found"));
         appointment.setStatus("Completed");
         appointmentRepository.save(appointment);
         return ResponseEntity.ok(appointment);
     }
-    public ResponseEntity<Map<String,Object>> setReminder(long confirmationId,String notifyType,String notifyString){
+    
+    public ResponseEntity<Map<String,Object>> setReminder(int confirmationId,String notifyType,String notifyString){
         Map<String,Object> map = new HashMap<>();
         Appointment appointment = appointmentRepository.findById(confirmationId).orElseThrow(() -> new ResourceNotFoundException("Appointment not found"));
         appointment.setNotifyType(notifyType);
