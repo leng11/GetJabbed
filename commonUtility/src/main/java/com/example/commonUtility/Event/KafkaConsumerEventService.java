@@ -1,4 +1,4 @@
-package com.example.centerService.Event;
+package com.example.commonUtility.Event;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -42,11 +42,9 @@ public class KafkaConsumerEventService {
 										consumerRecord.topic(), consumerRecord.key(),
 											consumerRecord.partition(), handler.getClass());
 			
-			handler.processHandler(headers, consumerRecord.value());
+			handler.onEvent(headers, consumerRecord.value());
 		} else {
 			log.warn("topic: {} does not have event handler.", consumerRecord.topic());
 		}
-		
-		
 	}
 }

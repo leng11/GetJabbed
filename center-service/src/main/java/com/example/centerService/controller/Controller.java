@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,8 +15,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.centerService.model.Center;
-import com.example.centerService.model.Shipment;
+import com.example.centerService.model.Inventory;
 import com.example.centerService.model.Vaccine;
+import com.example.centerService.model.clientFacing.Shipment;
 import com.example.centerService.service.Service;
 
 @RestController
@@ -45,8 +47,8 @@ public class Controller {
 	}
 	
 	@PostMapping("/v1/vaccineCenters/restock")
-	public void restock(@RequestBody Shipment shipment) {
-		service.restock(shipment);	
+	public Inventory restock(@RequestBody Shipment shipment) {
+		return service.restock(shipment);	
 	}
 	
 	@PutMapping("/v1/vaccineCenters/publishReminder")
@@ -55,9 +57,12 @@ public class Controller {
 		return service.publishReminder(date);
 	}
 
-	@PostMapping("/v1/vaccineCenters/shotAdministrated")
-	public void testShotAdministratedFeature() {
-		service.testShotAdministratedFeature();
+	@PutMapping("/v1/vaccineCenters/shotAdministrated/{inventoryId}/{vaccineId}/{lot}/{userId}")
+	public boolean testShotAdministratedFeature(@PathVariable final long inventoryId,
+												@PathVariable final long vaccineId,
+												@PathVariable final String lot,
+												@PathVariable final long userId) {
+		return service.testShotAdministratedFeature(inventoryId, vaccineId, lot, userId);
 	}
 
 }

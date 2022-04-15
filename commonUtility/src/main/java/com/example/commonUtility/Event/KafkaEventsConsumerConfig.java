@@ -1,4 +1,4 @@
-package com.example.centerService.Event;
+package com.example.commonUtility.Event;
 
 import java.util.HashMap;
 import java.util.Map;

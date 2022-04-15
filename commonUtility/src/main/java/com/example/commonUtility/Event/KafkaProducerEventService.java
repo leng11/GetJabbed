@@ -1,4 +1,4 @@
-package com.example.centerService.Event;
+package com.example.commonUtility.Event;
 
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,7 @@ public class KafkaProducerEventService<K> {
 	@Autowired
 	KafkaTemplate<K, String> kafkaTemplate;
 	
-	public void sendEvent(final String topic, final K key, final String payload) {
+	public boolean sendEvent(final String topic, final K key, final String payload) {
 		ProducerRecord<K, String> producerRecord = new ProducerRecord<K, String>(topic, null, key, payload, null);
 		
 		ListenableFuture<SendResult<K, String>> future = kafkaTemplate.send(producerRecord);
@@ -31,7 +31,7 @@ public class KafkaProducerEventService<K> {
 				handleSuccess(key, payload, result);
 			}
 		});
-		
+		return true;
 	}
 	
 	public void handleFailure(final K key, final String payload, final Throwable ex) {

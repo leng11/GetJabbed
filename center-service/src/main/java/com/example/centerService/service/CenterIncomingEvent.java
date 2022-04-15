@@ -1,15 +1,17 @@
-package com.example.centerService.Event;
+package com.example.centerService.service;
 
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.example.centerService.model.Inventory;
 import com.example.centerService.repository.InventoryRepo;
+import com.example.commonUtility.Event.EventHandler;
+import com.example.commonUtility.Event.KafkaConsumerEventService;
+import com.example.commonUtility.Event.KafkaUtil;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -33,7 +35,9 @@ public class CenterIncomingEvent implements EventHandler {
 	@Autowired
 	private InventoryRepo inventoryRepo;
 	
-	public void processHandler(final Map<String, Object> headers, final String payload) {
+	
+	@Override
+	public void onEvent(final Map<String, Object> headers, final String payload) {
 		log.info("started processing msg from topic: {}", headers.get(KafkaConsumerEventService.TOPIC_ATTR));
 		
 		long inventoryId = -1;

@@ -1,4 +1,4 @@
-package com.example.centerService.Event;
+package com.example.commonUtility.Event;
 
 import java.io.IOException;
 import java.util.HashMap;

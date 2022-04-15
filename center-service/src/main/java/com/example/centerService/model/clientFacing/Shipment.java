@@ -1,4 +1,4 @@
-package com.example.centerService.model;
+package com.example.centerService.model.clientFacing;
 
 import java.util.Date;
 

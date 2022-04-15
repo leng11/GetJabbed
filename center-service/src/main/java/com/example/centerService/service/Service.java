@@ -1,13 +1,13 @@
 package com.example.centerService.service;
 
-import static com.example.centerService.Event.CenterIncomingEvent.AVAILABLE_SHOT_ATTR;
-import static com.example.centerService.Event.CenterIncomingEvent.CENTER_ID_ATTR;
-import static com.example.centerService.Event.CenterIncomingEvent.INVENTORY_ID_ATTR;
-import static com.example.centerService.Event.CenterIncomingEvent.LOT_ATTR;
-import static com.example.centerService.Event.CenterIncomingEvent.LOT_SIZE_ATTR;
-import static com.example.centerService.Event.CenterIncomingEvent.REMINDER_DATE_ATTR;
-import static com.example.centerService.Event.CenterIncomingEvent.USER_ID_ATTR;
-import static com.example.centerService.Event.CenterIncomingEvent.VACCINE_ID_ATTR;
+import static com.example.centerService.service.CenterIncomingEvent.AVAILABLE_SHOT_ATTR;
+import static com.example.centerService.service.CenterIncomingEvent.CENTER_ID_ATTR;
+import static com.example.centerService.service.CenterIncomingEvent.INVENTORY_ID_ATTR;
+import static com.example.centerService.service.CenterIncomingEvent.LOT_ATTR;
+import static com.example.centerService.service.CenterIncomingEvent.LOT_SIZE_ATTR;
+import static com.example.centerService.service.CenterIncomingEvent.REMINDER_DATE_ATTR;
+import static com.example.centerService.service.CenterIncomingEvent.USER_ID_ATTR;
+import static com.example.centerService.service.CenterIncomingEvent.VACCINE_ID_ATTR;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -22,17 +22,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import com.example.centerService.Event.CenterIncomingEvent;
-import com.example.centerService.Event.KafkaConsumerEventService;
-import com.example.centerService.Event.KafkaProducerEventService;
-import com.example.centerService.Event.KafkaUtil;
 import com.example.centerService.model.Center;
 import com.example.centerService.model.Inventory;
-import com.example.centerService.model.Shipment;
 import com.example.centerService.model.Vaccine;
+import com.example.centerService.model.clientFacing.Shipment;
 import com.example.centerService.repository.CenterRepo;
 import com.example.centerService.repository.InventoryRepo;
 import com.example.centerService.repository.VaccineRepo;
+import com.example.commonUtility.Event.KafkaConsumerEventService;
+import com.example.commonUtility.Event.KafkaProducerEventService;
+import com.example.commonUtility.Event.KafkaUtil;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -93,7 +92,7 @@ public class Service {
 		return vaccineRepo.findById(id);
 	}
 	
-	public void restock(Shipment shipment) {
+	public Inventory restock(Shipment shipment) {
 		try {
 			// update db inventory.
 			Vaccine vaccine = vaccineRepo.findById(shipment.getVaccineId()).orElseThrow();
@@ -117,6 +116,7 @@ public class Service {
 
 			String payload = KafkaUtil.mapToPayload(msg);
 			eventProducer.sendEvent(vaccineInventoryTopic, inventory.getId(), payload);
+			return inventory;
 		} catch (NoSuchElementException nse) {
 			log.error("failed to find either corresponding vaccine or center, shipment:{}", shipment);
 			throw new RuntimeException("server error."); // convert to server exception for error handling later.
@@ -149,15 +149,16 @@ public class Service {
 		return true;
 	}
 	
-	public void testShotAdministratedFeature() {
+	public boolean testShotAdministratedFeature(final long inventoryId, final long vaccineId,
+															final String lot, final long userId) {
 		Map<String, Object> msg = new HashMap<>();
 		
-		msg.put(INVENTORY_ID_ATTR, 1);
-		msg.put(VACCINE_ID_ATTR, 1);
-		msg.put(LOT_ATTR, "lot attr");
-		msg.put(USER_ID_ATTR, 1);
+		msg.put(INVENTORY_ID_ATTR, inventoryId);
+		msg.put(VACCINE_ID_ATTR, vaccineId);
+		msg.put(LOT_ATTR, lot);
+		msg.put(USER_ID_ATTR, userId);
 		
 		String payload = KafkaUtil.mapToPayload(msg);
-		eventProducer.sendEvent(shotAdministratedTopic, 1L, payload);
+		return eventProducer.sendEvent(shotAdministratedTopic, inventoryId, payload);
 	}
 }
