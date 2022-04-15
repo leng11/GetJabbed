@@ -23,6 +23,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.example.centerService.Event.CenterIncomingEvent;
+import com.example.centerService.Event.KafkaConsumerEventService;
 import com.example.centerService.Event.KafkaProducerEventService;
 import com.example.centerService.Event.KafkaUtil;
 import com.example.centerService.model.Center;
@@ -63,8 +64,9 @@ public class Service {
 	
 	private final Random rand = new Random();
 	
-	public Service(@Autowired CenterIncomingEvent centerIncomingEvent) {
-		centerIncomingEvent.register();
+	public Service(@Autowired final CenterIncomingEvent centerIncomingEvent,
+					@Value("${spring.application.event.incoming.topic.shotAdministrated}") final String topic) {
+		KafkaConsumerEventService.addHandler(topic, centerIncomingEvent);
 	}
 	
 	public Center add(Center center) {

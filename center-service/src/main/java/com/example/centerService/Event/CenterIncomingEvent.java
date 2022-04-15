@@ -30,18 +30,9 @@ public class CenterIncomingEvent implements EventHandler {
 	public static final String REMINDER_DATE_ATTR = "reminderDate";
 	public static final String AVAILABLE_SHOT_ATTR = "availableShot";
 	
-	
-	@Value("${spring.application.event.incoming.topic.shotAdministrated}")
-	private String topic;
-	
 	@Autowired
 	private InventoryRepo inventoryRepo;
 	
-	public EventHandler register() {
-		log.info("register incoming event on topic: {}", topic);
-		return KafkaConsumerEventService.addHandler(topic, this);
-	}
-
 	public void processHandler(final Map<String, Object> headers, final String payload) {
 		log.info("started processing msg from topic: {}", headers.get(KafkaConsumerEventService.TOPIC_ATTR));
 		
