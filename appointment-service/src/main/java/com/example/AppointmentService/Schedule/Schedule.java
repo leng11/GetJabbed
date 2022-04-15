@@ -51,19 +51,4 @@ public class Schedule {
         this.time = time;
 
     }
-    public void setTotalSlots(){
-        this.totalSlot= appointmentList.size();
-    }
-    public void setOpenSlots(){
-        int openSlots = (int) appointmentList.stream()
-                .filter(appointment -> appointment.getStatus().equalsIgnoreCase("open"))
-                .count();
-        this.openSlot = openSlots;
-    }
-    public void setCompletedSlots(){
-        int completedSlots = (int) appointmentList.stream()
-                .filter(appointment -> appointment.getStatus().equalsIgnoreCase("completed"))
-                .count();
-        this.completedSlot = completedSlots;
-    }
 }
