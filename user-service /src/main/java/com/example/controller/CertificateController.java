@@ -15,14 +15,13 @@ public class CertificateController {
         this.certificateDao = certificateDao;
     }
 
-    @GetMapping("/retriveCertificate")
+    @GetMapping("/retrieveCertificate")
     public Certificate getCertificateByUser(@RequestParam(value = "officialId") final int officialId){
         return certificateDao.getCertificateByOfficialId(officialId);
     }
 
     @PostMapping("/add")
     public Certificate saveCertificate(@RequestBody Certificate certificate){
-
         return certificateDao.save(certificate);
     }
 

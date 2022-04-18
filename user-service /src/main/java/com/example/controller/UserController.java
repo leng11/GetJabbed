@@ -2,17 +2,18 @@ package com.example.controller;
 
 import com.example.dao.UserDao;
 import com.example.entity.User;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Iterator;
 import java.util.List;
 
 @RestController
 @RequestMapping("/v1/vaccine/users/")
 public class UserController {
-    @Autowired
-    private UserDao userDao;
+    private final UserDao userDao;
+
+    public UserController(UserDao userDao) {
+        this.userDao = userDao;
+    }
 
 
     @PostMapping("/register")
@@ -22,13 +23,13 @@ public class UserController {
 
 
     @GetMapping("/data")
-    public User findById(@RequestParam(name = "officialid") int officialid) {
-        return userDao.findByOfficialid(officialid);
+    public User findById(@RequestParam(name = "officialId") int officialId) {
+        return userDao.findByOfficialId(officialId);
     }
 
 
     @GetMapping("/list")
-    public List< User > findAll() {
+    public List<User> findAll() {
         return userDao.findAll();
     }
 

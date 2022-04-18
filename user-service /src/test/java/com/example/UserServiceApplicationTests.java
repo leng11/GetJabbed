@@ -47,7 +47,7 @@ class UserServiceApplicationTests {
         user.setId(1L);
         user.setName("Sample");
         user.setAddress("Sample");
-        user.setOfficialid(123);
+        user.setOfficialId(123);
         userdao.save(user);
         assertNotNull(userdao.findAll());
 
@@ -72,6 +72,7 @@ class UserServiceApplicationTests {
         Date date = formatter.parse(dateInString);
         certificate.setDate(date);
 
+        certificate.setOfficialId(123);
         certificate.setLocation("Durgapur");
         certificate.setLot(4);
         certificate.setVaccine_id(223);

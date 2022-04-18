@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CertificateDao extends CrudRepository<Certificate,Integer> {
-    public Certificate getCertificateByOfficialId(int officialid);
+    Certificate getCertificateByOfficialId(int id);
 }
