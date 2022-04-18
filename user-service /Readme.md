@@ -2,6 +2,15 @@
 
 # Steps to Use the User-Service 
 
+- Before Using user-service you need to install Mysql in your system. You can download Mysql through Mysql Workbench or use docker and can do the same 
+- If you are using docker run the following command to use mysql container. This following command will install mysql as docker container.
+
+```
+
+docker run -d --name mysql-server -p 3306:3306 -v mysql_data:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=Welcome#123 mysql
+
+```
+
 - Go to application.proprties and update the MySql Root password 
 - Start the springboot server 
 
