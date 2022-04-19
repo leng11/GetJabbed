@@ -72,10 +72,10 @@ class UserServiceApplicationTests {
         Date date = formatter.parse(dateInString);
         certificate.setDate(date);
 
-        certificate.setOfficialId(123);
         certificate.setLocation("Durgapur");
         certificate.setLot(4);
         certificate.setVaccine_id(223);
+        certificate.setOfficialId(123);
         certificatedao.save(certificate);
         assertNotNull(certificatedao.findAll());
     }
